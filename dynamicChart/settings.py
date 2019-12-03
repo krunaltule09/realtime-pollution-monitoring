@@ -28,7 +28,7 @@ SECRET_KEY = 'hw1_iy9t+(^8&#7f(fgo=u843jylq0uv*sym4cim7j!5vspp%6'
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['https://realtime-pollution-monitoring.herokuapp.com/']
+ALLOWED_HOSTS = ['https://realtime-pollution-monitoring.herokuapp.com']
 
 
 # Application definition
