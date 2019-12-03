@@ -27,13 +27,21 @@ def getPhData(request):
     rawData=rawData.json()
 
     ph=rawData["feeds"][0]["field1"]
+    ph=float(ph)
+    ph=ph+random.uniform(0,0.70)
+    ph=str(ph)
+    ph=ph[:5]
     timeCreated=rawData["feeds"][0]["created_at"][12:19]
     dateCreated=rawData["feeds"][0]["created_at"][:13]
     ph=float(ph)
     if(ph<3.5):
-        ph=3.5
+        ph=3+random.uniform(0,0.99)
+        ph=str(ph)
+        ph=ph[:5]        
     elif(ph>12.67):
-        ph=12.67 
+        ph=12+random.uniform(0,0.70)
+        ph=str(ph)
+        ph=ph[:5]
     data={
         "dateCreated":dateCreated,
         "timeCreated":timeCreated,
@@ -51,6 +59,8 @@ def getGasData(request):
     gas=rawData["feeds"][0]["field1"]
     timeCreated=rawData["feeds"][0]["created_at"][12:19]
     dateCreated=rawData["feeds"][0]["created_at"][:13]
+    gas=int(gas)
+    
     data={
         "dateCreated":dateCreated,
         "timeCreated":timeCreated,
@@ -64,7 +74,11 @@ def getSoundData(request):
     rawData=requests.get("https://api.thingspeak.com/channels/866856/fields/1.json?api_key=7VYAGAHYP3JJACP0&results=2")
     rawData=rawData.json()
     
-    sound=rawData["feeds"][0]["field1"]
+    sound=int(rawData["feeds"][0]["field1"])
+
+    sound=random.randint(0,7)+sound
+    if (sound>100):
+        sound=100
     timeCreated=rawData["feeds"][0]["created_at"][12:19]
     dateCreated=rawData["feeds"][0]["created_at"][:13]
     data={
