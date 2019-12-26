@@ -82,8 +82,12 @@ WSGI_APPLICATION = 'dynamicChart.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': 'dcm8josaj63adq',
+    'USER': 'rqrbxofmdvikhe',
+    'PASSWORD': '9a0df4d2e6e8c13a67910fee64e495ec6a71539c3976c8a8eaabbadc65df3b6f',
+    'HOST': 'ec2-54-225-195-3.compute-1.amazonaws.com',
+    'PORT': '5432',
     }
 }
 
