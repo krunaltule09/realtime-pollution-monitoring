@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-import random,datetime,requests,datetime
+import random,requests
+from datetime import datetime
 from pytz import timezone
+from .models import gasdb,phdb,sounddb
 
 
 # Create your views here.
@@ -31,8 +33,11 @@ def getPhData(request):
     ph=ph+random.uniform(0,0.70)
     ph=str(ph)
     ph=ph[:5]
-    timeCreated=rawData["feeds"][0]["created_at"][12:19]
+    timeCreated=rawData["feeds"][0]["created_at"][12:17]
     dateCreated=rawData["feeds"][0]["created_at"][:13]
+    timestamp=rawData["feeds"][0]["created_at"]
+    timestamp=timestamp.replace("T"," ")
+    timestamp=timestamp.replace("Z","")
     ph=float(ph)
     if(ph<3.5):
         ph=3+random.uniform(0,0.99)
@@ -42,6 +47,9 @@ def getPhData(request):
         ph=12+random.uniform(0,0.70)
         ph=str(ph)
         ph=ph[:5]
+    timestamp1=datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S')
+    phObject=phdb(timestamp=timestamp1,value=ph)
+    phObject.save()
     data={
         "dateCreated":dateCreated,
         "timeCreated":timeCreated,
@@ -59,8 +67,14 @@ def getGasData(request):
     gas=rawData["feeds"][0]["field1"]
     timeCreated=rawData["feeds"][0]["created_at"][12:19]
     dateCreated=rawData["feeds"][0]["created_at"][:13]
+    timestamp=rawData["feeds"][0]["created_at"]
+    timestamp=timestamp.replace("T"," ")
+    timestamp=timestamp.replace("Z","")
     gas=int(gas)
-    
+    timestamp1=datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S')
+
+    gasObject=gasdb(timestamp=timestamp1,value=gas)
+    gasObject.save()
     data={
         "dateCreated":dateCreated,
         "timeCreated":timeCreated,
@@ -81,6 +95,13 @@ def getSoundData(request):
         sound=100
     timeCreated=rawData["feeds"][0]["created_at"][12:19]
     dateCreated=rawData["feeds"][0]["created_at"][:13]
+    timestamp=rawData["feeds"][0]["created_at"]
+    timestamp=timestamp.replace("T"," ")
+    timestamp=timestamp.replace("Z","")
+    timestamp1=datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S')
+
+    soundObject=sounddb(timestamp=timestamp1,value=sound)
+    soundObject.save()
     data={
         "dateCreated":dateCreated,
         "timeCreated":timeCreated,
